@@ -1,0 +1,21 @@
+
+Package: saikat-hotspot-server
+
+Version: 2.3-1
+
+Depends: nodogsplash, uhttpd-mod-ubus, jsonfilter, wget, jq, luci-app-nft-qos, nft-qos, coreutils-sleep
+
+Section: net
+
+Architecture: all
+
+Maintainer: Saikat Hasan <saikathasan947@gmail.com>
+
+Filename: saikat-hotspot-server_2.3-1_x86_64.ipk
+
+Size: 4819
+
+Description: This package installs and configures a secure hotspot with speed limiting.
+
+
+
