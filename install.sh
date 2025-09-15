@@ -1,12 +1,13 @@
 #!/bin/sh
 
 # =================================================================
-#      SAIKAT-HOTSPOT-SERVER -- UNIVERSAL INSTALLER SCRIPT
+#      SAIKAT-HOTSPOT-SERVER -- UNIVERSAL INSTALLER SCRIPT v2
 # =================================================================
 
 REPO_URL="https://raw.githubusercontent.com/jaybhit-sudo/saikat-hotspot-server/main"
 FEED_CONFIG_LINE="src/gz saikat_hotspot_repo ${REPO_URL}"
 CUSTOM_FEEDS_FILE="/etc/opkg/customfeeds.conf"
+OPKG_CONFIG_FILE="/etc/opkg.conf"
 
 # Function to display messages
 log() {
@@ -21,11 +22,19 @@ else
     log "Repository already exists."
 fi
 
-# 2. Update the package list
+# 2. Temporarily disable signature checking to allow our unsigned repo
+log "Temporarily disabling signature check..."
+sed -i 's/option check_signature/#option check_signature/' "${OPKG_CONFIG_FILE}"
+
+# 3. Update the package list
 log "Updating package lists..."
 opkg update
 
-# 3. Install the package
+# 4. Re-enable signature checking for security
+log "Re-enabling signature check..."
+sed -i 's/#option check_signature/option check_signature/' "${OPKG_CONFIG_FILE}"
+
+# 5. Install the package
 log "Attempting to install saikat-hotspot-server..."
 opkg install saikat-hotspot-server
 
